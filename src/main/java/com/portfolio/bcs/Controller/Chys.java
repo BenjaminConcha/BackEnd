@@ -26,11 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/skill")
+@RequestMapping("/hys")
 @CrossOrigin(origins = "https://ftdbcs-516a6.web.app")
 public class Chys {
 
-     @Autowired
+    @Autowired
     Shys shys;
 
     @GetMapping("/lista")
