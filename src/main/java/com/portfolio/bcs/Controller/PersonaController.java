@@ -72,9 +72,13 @@ public class PersonaController {
         //No puede estar vacio
         if(StringUtils.isBlank(dtopersona.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(dtopersona.getApellido()))
+            return new ResponseEntity(new Mensaje("El apellido es obligatorio"), HttpStatus.BAD_REQUEST);
+        
         
         Persona persona = personaService.getOne(id).get();
         persona.setNombre(dtopersona.getNombre());
+        persona.setApellido(dtopersona.getApellido());
         persona.setDescripcion((dtopersona.getDescripcion()));
         
         personaService.save(persona);
