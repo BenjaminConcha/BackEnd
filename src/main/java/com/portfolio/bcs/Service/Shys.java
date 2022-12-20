@@ -12,8 +12,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
 @Transactional
+@Service
 public class Shys {
     @Autowired
     Rhys rhys;

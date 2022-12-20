@@ -5,6 +5,7 @@
 package com.portfolio.bcs.Controller;
 
 import com.portfolio.bcs.Dto.dtoHys;
+import com.portfolio.bcs.Entity.Experiencia;
 import com.portfolio.bcs.Entity.Hys;
 import com.portfolio.bcs.Security.Controller.Mensaje;
 import com.portfolio.bcs.Service.Shys;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/hys")
+@RequestMapping("/skill")
 @CrossOrigin(origins = "https://ftdbcs-516a6.web.app")
 public class Chys {
 
@@ -40,12 +41,12 @@ public class Chys {
     }
 
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Hys> getById(@PathVariable("id") int id) {
+    public ResponseEntity<Experiencia> getById(@PathVariable("id") int id) {
         if (!shys.existsById(id)) {
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         }
-        Hys hYs = shys.getOne(id).get();
-        return new ResponseEntity(hYs, HttpStatus.OK);
+        Hys hys = shys.getOne(id).get();
+        return new ResponseEntity(hys, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -54,7 +55,7 @@ public class Chys {
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
         }
         shys.delete(id);
-        return new ResponseEntity(new Mensaje("Skill eliminado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("Skill eliminada"), HttpStatus.OK);
     }
 
     @PostMapping("/create")
@@ -63,11 +64,11 @@ public class Chys {
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         }
         if (shys.existsByNombre(dtohys.getNombre())) {
-            return new ResponseEntity(new Mensaje("Esa skill ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Mensaje("Esa Skill ya existe"), HttpStatus.BAD_REQUEST);
         }
 
-        Hys hYs = new Hys(dtohys.getNombre(), dtohys.getPorcentaje());
-        shys.save(hYs);
+        Hys hys = new Hys(dtohys.getNombre(), dtohys.getPorcentaje());
+        shys.save(hys);
 
         return new ResponseEntity(new Mensaje("Skill agregada"), HttpStatus.OK);
     }
@@ -78,21 +79,20 @@ public class Chys {
         if (!shys.existsById(id)) {
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
         }
-        //Compara nombre de skills
-        if (shys.existsByNombre(dtohys.getNombre()) && shys.getByNombre(dtohys.getNombre()).get()
-                .getId() != id) {
-            return new ResponseEntity(new Mensaje("Esa skill ya existe"), HttpStatus.BAD_REQUEST);
+        //Compara nombre de experiencias
+        if (shys.existsByNombre(dtohys.getNombre()) && shys.getByNombre(dtohys.getNombre()).get().getId() != id) {
+            return new ResponseEntity(new Mensaje("Esa Skill ya existe"), HttpStatus.BAD_REQUEST);
         }
         //No puede estar vacio
         if (StringUtils.isBlank(dtohys.getNombre())) {
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         }
 
-        Hys hYs = shys.getOne(id).get();
-        hYs.setNombre(dtohys.getNombre());
-        hYs.setPorcentaje(dtohys.getPorcentaje());
+        Hys hys = shys.getOne(id).get();
+        hys.setNombre(dtohys.getNombre());
+        hys.setPorcentaje((dtohys.getPorcentaje()));
 
-        shys.save(hYs);
+        shys.save(hys);
         return new ResponseEntity(new Mensaje("Skill actualizada"), HttpStatus.OK);
 
     }
